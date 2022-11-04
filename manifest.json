@@ -1,0 +1,21 @@
+{
+
+  "author": "Joe Dinn, Luke Bratch",
+
+  "manifest_version": 2,
+  "name": "Wikipedia redirect",
+  "version": "1.0",
+
+  "description": "Redirects mobile Wikipedia pages to the desktop vesion. Also fixes links with backslashes",
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "permissions": [
+    "*://*.wikipedia.org/*",
+    "webRequest",
+    "webRequestBlocking"
+  ]
+
+}
