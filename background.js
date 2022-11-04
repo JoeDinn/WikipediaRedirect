@@ -1,25 +1,21 @@
 // match pattern for the URLs to redirect
-var pattern = "*://*.wikipedia.org/*";
+let urlPattern = "*://*.wikipedia.org/*";
+let backslashRE = new RegExp(/%5C_|\\_|\/_/g);
+browser = (typeof browser !== 'undefined')? browser: chrome;
 
 // redirect function
 // returns an object with a property `redirectURL`
 // set to the new URL
 function redirect(requestDetails) {
-    var url = new URL(requestDetails.url);
-    var changeUrl = false;
-    if (url.host.includes(".m.wikipedia.org"))
+    let url = new URL(requestDetails.url);
+    console.log(url)
+
+    // Check needed to prevent infinite loops
+    if (url.host.includes(".m.wikipedia.org") || backslashRE.test(url.pathname))
     {
         url.href = url.href.replace(".m.wikipedia.org", ".wikipedia.org");
-        changeUrl = true;
-    }
-    if (url.pathname.includes("%5C_"))
-    {  
-        url.href = url.href.replace("%5C_", "_")
-        changeUrl = true;
-    }
-    if (changeUrl)
-    {
-        console.log(url)
+        url.href = url.href.replace(backslashRE, "_")
+        
         console.log("Redirecting: " + url.href);
         return {
             redirectUrl: url.href
@@ -31,6 +27,6 @@ function redirect(requestDetails) {
 // passing the filter argument and "blocking"
 browser.webRequest.onBeforeRequest.addListener (
   redirect,
-  {urls:[pattern], types:["main_frame"]},
+  {urls:[urlPattern], types:["main_frame"]},
   ["blocking"]
 );
