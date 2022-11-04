@@ -4,6 +4,7 @@
 
   "manifest_version": 2,
   "name": "Wikipedia redirect",
+  "homepage_url": "https://github.com/JoeDinn/WikipediaRedirect",
   "version": "1.0",
 
   "description": "Redirects mobile Wikipedia pages to the desktop vesion. Also fixes links with backslashes",
